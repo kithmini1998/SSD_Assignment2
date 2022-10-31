@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+system:
+  jdbc:
+    url: jdbc:mysql://localhost:3306/customer
+    user: root
+    pass: root
+    connectionPool: 10
+
+application:
+  jwt:
+    secretKey: SecuritySecuritySecuritySecuritySecuritySecuritySecurity
+    tokenPrefix: Bearer
+    tokenExpirationAfterDays: 1
+
