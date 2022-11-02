@@ -18,14 +18,14 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("v1/user")
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
 
 
     @PostMapping("/registration")
-    public ResponseEntity<Boolean> addUser(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         log.info("received user request body {} ", user);
         return ResponseEntity.ok(this.userServiceImpl.addUser(user));
     }

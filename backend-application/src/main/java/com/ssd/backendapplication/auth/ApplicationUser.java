@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class ApplicationUser implements UserDetails {
 
-    private int id;
+    private String id;
     private String username;
     private String password;
 
@@ -22,7 +22,7 @@ public class ApplicationUser implements UserDetails {
     private boolean isEnabled;
 
     public ApplicationUser(
-            int id,
+            String id,
             String username,  String password,
             List<? extends GrantedAuthority> grantedAuthorities,
             boolean isAccountNonExpired,
