@@ -23,7 +23,7 @@ class LogIn extends Component {
   render() {
     return (
       <div className="Auth-form-container">
-        <form className="Auth-form">
+        <form className="Auth-form mb-3">
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="form-group mt-3">
@@ -39,12 +39,12 @@ class LogIn extends Component {
               <label>Password</label>
               <input
                 type="password"
-                className="form-control mt-1"
+                className="form-control mt-1 mb-3"
                 placeholder="Enter password"
                 onChange={this.changePasswordHander}
               />
             </div>
-            <div className="d-grid gap-2 mt-3">
+            <div className="d-grid gap-2 mt-3 mb-4">
               <button
                 type="button"
                 onClick={this.Login}

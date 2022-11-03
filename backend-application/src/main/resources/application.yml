@@ -20,4 +20,4 @@ application:
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://vihanga:malisha1996@applicationframeork.q7rvl.mongodb.net/SSD?retryWrites=true&w=majority
+      uri: mongodb://localhost:27017
