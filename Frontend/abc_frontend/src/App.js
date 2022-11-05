@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Route path="/login" exact component={LogIn} />
+        <Route path="/" exact component={LogIn} />
         <Route path="/addMessage" exact component={AddMessageComponent} />
         <Route path="/addFile" exact component={AddFileComponent} />
         <Route path="/addUser" exact component={AddUser} />

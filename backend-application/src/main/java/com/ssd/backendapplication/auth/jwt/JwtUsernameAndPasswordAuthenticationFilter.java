@@ -60,28 +60,32 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         ApplicationUser applicationUser = (ApplicationUser) authResult.getPrincipal();
 
-            String token = Jwts.builder()
-                    .setSubject(authResult.getName())
-                    .claim("authorities", authResult.getAuthorities())
-                    .claim("userId", applicationUser.getId())
-                    .setIssuedAt(new Date())
-                    .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
-                    .signWith(secretKey)
-                    .compact();
+        String token = Jwts.builder()
+                .setSubject(authResult.getName())
+                .claim("authorities", authResult.getAuthorities())
+                .claim("userId", applicationUser.getId())
+                .setIssuedAt(new Date())
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+                .signWith(secretKey)
+                .compact();
 
-            response.addHeader(constant.getAuthorizationHeader(), constant.getTokenPrefix() + token);
-            response.setStatus(200);
+        response.addHeader(constant.getAuthorizationHeader(), constant.getTokenPrefix() + token);
+        response.setStatus(200);
 
-            Map<String, String> object = new HashMap<>();
+        Map<String, String> object = new HashMap<>();
 
-            object.put("id", String.valueOf(applicationUser.getId()));
-            object.put("username", applicationUser.getUsername());
-            object.put("accessToken", token);
-            object.put("status","200");
+        object.put("id", String.valueOf(applicationUser.getId()));
+        object.put("username", applicationUser.getUsername());
+        object.put("accessToken", token);
+        object.put("status", "200");
 
 
-            response.setContentType(APPLICATION_JSON_VALUE);
-            new ObjectMapper().writeValue(response.getOutputStream(), object);
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT,OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "*");
+        new ObjectMapper().writeValue(response.getOutputStream(), object);
 
     }
 }

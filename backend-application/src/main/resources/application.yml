@@ -1,7 +1,16 @@
 server:
-  port: 8081
+  port: 443
   servlet:
     context-path: /api/
+  ssl:
+    enabled: true
+    key-alias: local_ssl
+    key-store: D:\SLIIT\SSD Assigment 02\SSD_Assignment2\backend-application\src\main\resources\local-ssl.p12
+    key-store-type: PKCS12
+    key-password: 123456789
+    key-store-password: 123456789
+
+#      key-store: backend-application/src/main/resources/local-ssl.p12
 
 
 application:
@@ -15,6 +24,7 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://vihanga:malisha1996@applicationframeork.q7rvl.mongodb.net/ssd?retryWrites=true&w=majority
+
 
 
 
