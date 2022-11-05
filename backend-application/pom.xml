@@ -57,12 +57,6 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-        <!--project jdbc starter dependency-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>
-
         <!--project spring security starter dependency-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

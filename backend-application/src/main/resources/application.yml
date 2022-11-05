@@ -3,12 +3,6 @@ server:
   servlet:
     context-path: /api/
 
-system:
-  jdbc:
-    url: jdbc:mysql://localhost:3306/customer
-    user: root
-    pass: root
-    connectionPool: 10
 
 application:
   jwt:
@@ -20,4 +14,8 @@ application:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/ssdapp
+      uri: mongodb+srv://vihanga:malisha1996@applicationframeork.q7rvl.mongodb.net/ssd?retryWrites=true&w=majority
+
+
+
+
