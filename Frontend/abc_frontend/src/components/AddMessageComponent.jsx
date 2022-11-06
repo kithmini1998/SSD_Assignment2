@@ -1,55 +1,71 @@
-import React, {Component} from 'react';
-import Header from "./Header";
+import React, { Component } from 'react'
+import Header from './Header'
 
 class AddMessageComponent extends Component {
-    render() {
-        return (
-            <div>
-                <div>
-                    <br/><br/><br/><br/>
-                    <div className="container">
-                        <Header></Header>
-                        <div className="row">
-                            <form>
-                                <div className="mb-3">
-                                    <label className="form-label"><i className="fa fa-user-o" aria-hidden="true"></i>&nbsp;
-                                        Message Info
-                                    </label>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <input type="text" name="title" id="title" placeholder="Enter Title Here" className="form-control"/>
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="description" id="description" placeholder="Message Description" className="form-control" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div className="container mb-3">
-                        <div className="row">
-                            {/*Cancel Button*/}
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
-                                <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
-                                Cancel
-                            </button>
-                        </div>
-                        <br/>
-                        <div className="row">
-                            {/*Add Notice Button*/}
-                            <button type="button" className="btn btn-primary"><i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                                Save
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        );
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      message: '',
     }
+    this.changeTitleHander = this.changeTitleHander.bind(this)
+    this.changeMessageHander = this.changeMessageHander.bind(this)
+  }
+  changeTitleHander = (event) => {
+    this.setState({ title: event.target.value })
+  }
+  changeMessageHander = (event) => {
+    this.setState({ message: event.target.value })
+  }
+  Submit = (e) => {
+    let object = {
+      title: this.state.title,
+      message: this.state.message,
+    }
+    console.log(object)
+  }
+  render() {
+    return (
+      <div>
+        <Header></Header>
+        <div className="Auth-form-container">
+          <form className="Auth-form mb-3">
+            <div className="Auth-form-content">
+              <h3 className="Auth-form-title">Message</h3>
+              <div className="form-group mt-3">
+                <label>Title</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter Title"
+                  onChange={this.changeTitleHander}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Message</label>
+                <textarea
+                  type="text"
+                  rows="7"
+                  placeholder="Enter Message Description"
+                  className="form-control"
+                  onChange={this.changeMessageHander}
+                />
+              </div>
+              <div className="d-grid gap-2 mt-3 mb-4">
+                <button
+                  type="button"
+                  onClick={this.Submit}
+                  className="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default AddMessageComponent;
+export default AddMessageComponent

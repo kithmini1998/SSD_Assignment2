@@ -1,90 +1,148 @@
-import React, {Component} from 'react';
-import Header from "./Header";
+import React, { Component } from 'react'
+import Header from './Header'
 
 class AddUser extends Component {
-    render() {
-        return (
-            <div>
-                <div>
-                    <br/><br/><br/><br/>
-                    <div className="container">
-                        <Header></Header>
-                        <div className="row">
-                            <form>
-                                <div className="mb-3">
-                                    <label className="form-label"><i className="fa fa-user-o" aria-hidden="true"></i>&nbsp;
-                                        Add User
-                                    </label>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <input type="text" name="name" id="name" placeholder="Enter Name" className="form-control"/>
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="userName" id="userName" placeholder="Enter Username" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <div className="input-group mb-3">
-                                            <select className="custom-select" name="roleId" id="roleId" placeholder="Role ID"
-                                                    style={{height:"45px",width:"100%"}}>
-                                                <option selected>Choose Role ID...</option>
-                                                <option value="Research Paper Presentation">Manager</option>
-                                                <option value="Research Paper Presentation">Worker</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="email" id="email" placeholder="Enter Email" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="password" id="password" placeholder="Enter Password" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="contact" id="contact" placeholder="Enter Contact No" className="form-control" />
-                                    </div>
-                                </div>
-                                <div className="mb-3">
-                                    <div className="input-group mb-3">
-                                        <textarea type="text" name="occupation" id="occupation" placeholder="Enter Occupation" className="form-control" />
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                    <div className="container mb-3">
-                        <div className="row">
-                            {/*Add Notice Button*/}
-                            <button type="button" className="btn btn-primary"><i className="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;
-                                Add User
-                            </button>
-                        </div>
-                        <br/>
-                        <div className="row">
-                            {/*Cancel Button*/}
-                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
-                                <i className="fa fa-times" aria-hidden="true"></i>&nbsp;
-                                Cancel
-                            </button>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        );
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      username: '',
+      role: '',
+      email: '',
+      password: '',
+      contact: '',
+      occupation: '',
     }
+    this.changeNameHander = this.changeNameHander.bind(this)
+    this.changeUserNameHander = this.changeUserNameHander.bind(this)
+    this.changeRoleHander = this.changeRoleHander.bind(this)
+    this.changeEmailHander = this.changeEmailHander.bind(this)
+    this.changePasswordHander = this.changePasswordHander.bind(this)
+    this.changeContactdHander = this.changeContactdHander.bind(this)
+    this.changeOccupationHander = this.changeOccupationHander.bind(this)
+  }
+
+  changeNameHander = (event) => {
+    this.setState({ name: event.target.value })
+  }
+  changeUserNameHander = (event) => {
+    this.setState({ username: event.target.value })
+  }
+  changeRoleHander = (event) => {
+    this.setState({ role: event.target.value })
+  }
+  changeEmailHander = (event) => {
+    this.setState({ email: event.target.value })
+  }
+  changePasswordHander = (event) => {
+    this.setState({ password: event.target.value })
+  }
+  changeContactdHander = (event) => {
+    this.setState({ contact: event.target.value })
+  }
+  changeOccupationHander = (event) => {
+    this.setState({ occupation: event.target.value })
+  }
+  submit = (e) => {
+    let object = {
+      name: this.state.name,
+      username: this.state.username,
+      role: this.state.role,
+      email: this.state.email,
+      password: this.state.password,
+      contact: this.state.contact,
+      occupation: this.state.occupation,
+    }
+    console.log(object)
+  }
+  render() {
+    return (
+      <div>
+        <Header></Header>
+        <div className="Auth-form-container mt-5">
+          <form className="Auth-form mb-3">
+            <div className="Auth-form-content">
+              <h3 className="Auth-form-title">Add User</h3>
+              <div className="form-group mt-3">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter Name"
+                  onChange={this.changeNameHander}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>User Name</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter User Name"
+                  onChange={this.changeUserNameHander}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Role</label>
+                <select
+                  className="custom-select"
+                  onChange={this.changeRoleHander}
+                >
+                  <option selected>Choose Role</option>
+                  <option value="63668b1c3c8e99030a41bfa0">Manager</option>
+                  <option value="63668b623c8e99030a41bfa1">Worker</option>
+                </select>
+              </div>
+              <div className="form-group mt-3">
+                <label>Email</label>
+                <input
+                  type="text"
+                  className="form-control mt-1"
+                  placeholder="Enter email"
+                  onChange={this.changeEmailHander}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control mt-1 mb-3"
+                  placeholder="Enter password"
+                  onChange={this.changePasswordHander}
+                />
+                <div className="form-group mt-3">
+                  <label>Contact Number</label>
+                  <input
+                    type="text"
+                    className="form-control mt-1"
+                    placeholder="Enter Contact Number"
+                    onChange={this.changeContactdHander}
+                  />
+                </div>
+                <div className="form-group mt-3">
+                  <label>Occupation</label>
+                  <input
+                    type="text"
+                    className="form-control mt-1"
+                    placeholder="Enter Occupation"
+                    onChange={this.changeOccupationHander}
+                  />
+                </div>
+              </div>
+              <div className="d-grid gap-2 mt-3 mb-4">
+                <button
+                  type="button"
+                  onClick={this.submit}
+                  className="btn btn-primary"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default AddUser;
+export default AddUser
