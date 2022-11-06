@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class Message {
 
-              private String title;
-              private String description;
+    private String title;
+    private String description;
 }
