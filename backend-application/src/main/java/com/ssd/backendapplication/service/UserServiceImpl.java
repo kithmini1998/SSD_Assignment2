@@ -58,11 +58,8 @@ public class UserServiceImpl implements UserService {
             OTP response = otpService.saveOTP(otp);
             if(response != null){
                 String messageBody = "Your OTP is " + response.getOtp();
-                if(sendSMS(messageBody)){
-                    return response.getId();
-                }else{
-                    System.out.println("Can not send the OTP number");
-                }
+                sendSMS(messageBody);
+                return response.getId();
             }else{
                 System.out.println("Response is null");
             }
