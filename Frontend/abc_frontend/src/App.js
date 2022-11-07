@@ -1,20 +1,24 @@
 import './App.css'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 //Import components
 import LogIn from './components/LogIn'
 import AddMessageComponent from './components/AddMessageComponent'
 import AddFileComponent from './components/AddFileComponent'
 import AddUser from './components/AddUser'
+import UserList from './components/UserList'
+import MessageList from './components/MessageList'
 
 function App() {
   return (
     <Router>
       <div>
         <Route path="/" exact component={LogIn} />
-        <Route path="/addMessage" exact component={AddMessageComponent} />
-        <Route path="/addFile" exact component={AddFileComponent} />
-        <Route path="/addUser" exact component={AddUser} />
+        <Route path="/add-message" exact component={AddMessageComponent} />
+        <Route path="/add-file" exact component={AddFileComponent} />
+        <Route path="/add-user" exact component={AddUser} />
+        <Route path="/user-list" exact component={UserList} />
+        <Route path="/message-list" exact component={MessageList} />
       </div>
     </Router>
   )
