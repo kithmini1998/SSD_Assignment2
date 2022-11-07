@@ -8,7 +8,7 @@ export default class MessageList extends Component {
     super(props)
     this.state = {
       loginUser: localStorage.getItem('token'),
-      permissions: jwt_decord(localStorage.getItem('token')).authorities,
+      permissions: '',
       file_list: [],
       title: '',
       addedby: '',
@@ -19,7 +19,10 @@ export default class MessageList extends Component {
   }
   componentDidMount() {
     if (this.state.loginUser) {
-      console.log('ddd')
+      this.state.permissions = jwt_decord(
+        localStorage.getItem('token'),
+      ).authorities
+      
       axios.get('https://localhost:443/api/v1/file/get/all').then((res) => {
         this.setState({ file_list: res.data })
       })

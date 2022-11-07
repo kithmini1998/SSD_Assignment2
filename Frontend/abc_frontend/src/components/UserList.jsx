@@ -8,7 +8,7 @@ export default class UserList extends Component {
     super(props)
     this.state = {
       loginUser: localStorage.getItem('token'),
-      permissions: jwt_decord(localStorage.getItem('token')).authorities,
+      permissions: '',
       user_list: [],
       name: '',
       username: '',
@@ -23,6 +23,9 @@ export default class UserList extends Component {
   }
   componentDidMount() {
     if (this.state.loginUser) {
+      this.state.permissions = jwt_decord(
+        localStorage.getItem('token'),
+      ).authorities
       const config = {
         headers: { Authorization: `Bearer ${this.state.loginUser}` },
       }
