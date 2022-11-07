@@ -55,7 +55,7 @@ class AddUser extends Component {
   submit = (e) => {
     let object = {
       name: this.state.name,
-      username: this.state.username,
+      userName: this.state.username,
       role: this.state.role,
       email: this.state.email,
       password: this.state.password,

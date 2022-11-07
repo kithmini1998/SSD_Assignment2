@@ -19,6 +19,7 @@ export default class MessageList extends Component {
   }
   componentDidMount() {
     if (this.state.loginUser) {
+      console.log('ddd')
       axios.get('https://localhost:443/api/v1/file/get/all').then((res) => {
         this.setState({ file_list: res.data })
       })

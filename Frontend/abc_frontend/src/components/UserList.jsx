@@ -47,19 +47,24 @@ export default class UserList extends Component {
   }
   viewuser = (e, id) => {
     console.log(id)
-
-    if (id == 'name') {
-      this.state.rolename = 'Worker'
-    } else {
-      this.state.rolename = 'Manager'
+    const config = {
+      headers: { Authorization: `Bearer ${this.state.loginUser}` },
     }
-    this.setState({
-      name: 'name',
-      username: 'name',
-      role: this.state.rolename,
-      email: 'email',
-      contact: 'contact',
-      occupation: 'occupation',
+    axios.get('https://localhost:443/api/v1/user/' + id, config).then((res) => {
+      console.log(res)
+      if (res.role == '63668b623c8e99030a41bfa1') {
+        this.state.rolename = 'Worker'
+      } else {
+        this.state.rolename = 'Manager'
+      }
+      this.setState({
+        name: res.data.name,
+        username: res.data.userName,
+        role: this.state.rolename,
+        email: res.data.email,
+        contact: res.data.contact,
+        occupation: res.data.occupation,
+      })
     })
   }
   render() {
@@ -105,7 +110,7 @@ export default class UserList extends Component {
                       <td className="text-center">
                         <button
                           className="btn btn-info btn-block fa fa-eye"
-                          onClick={(e) => this.viewuser(e, user._id)}
+                          onClick={(e) => this.viewuser(e, user.id)}
                           data-toggle="modal"
                           data-target="#exampleModal2"
                         ></button>

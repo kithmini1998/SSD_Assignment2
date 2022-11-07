@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
-       user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
 
@@ -27,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-
-        return null;
+    public User getUserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 }
