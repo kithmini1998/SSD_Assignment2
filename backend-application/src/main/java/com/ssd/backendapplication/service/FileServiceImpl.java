@@ -7,8 +7,11 @@ import com.ssd.backendapplication.repository.FileRepository;
 import com.ssd.backendapplication.util.HashCodeHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -54,10 +57,15 @@ public class FileServiceImpl implements FileService {
                 return file.get();
             } else {
                 log.info("file validate failed and file is tampered");
-                return null;
+                throw new ResponseStatusException(HttpStatus.OK,"file tampered");
             }
         }
         return null;
+    }
+
+    @Override
+    public List<File> getAllFiles() {
+        return fileRepository.findAll();
     }
 
 }

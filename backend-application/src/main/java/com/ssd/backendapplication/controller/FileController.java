@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("v1/file")
@@ -22,5 +24,10 @@ public class FileController {
     @GetMapping("/get/{id}")
     public ResponseEntity<File> getFileById(@PathVariable String id) {
         return ResponseEntity.ok(this.fileService.getFileById(id));
+    }
+
+    @GetMapping("/get/all")
+    public ResponseEntity<List<File>> getAllFiles() {
+        return ResponseEntity.ok(this.fileService.getAllFiles());
     }
 }
