@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 public class ApplicationUserService implements UserDetailsService {
 
 
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
 
@@ -38,7 +36,7 @@ public class ApplicationUserService implements UserDetailsService {
             return new ApplicationUser(
                     user.getId(),
                     user.getUserName(),
-                    passwordEncoder.encode(user.getPassword()),
+                    user.getPassword(),
                     simpleGrantedAuthorities,
                     true,
                     true,
