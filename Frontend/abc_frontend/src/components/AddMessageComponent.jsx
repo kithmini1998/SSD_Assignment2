@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import Header from './Header'
-
+import {saveMessage} from "../services/Messsage";
+import {saveFile} from "../services/File";
 class AddMessageComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
       title: '',
-      message: '',
+      description: '',
     }
     this.changeTitleHander = this.changeTitleHander.bind(this)
     this.changeMessageHander = this.changeMessageHander.bind(this)
@@ -15,14 +16,22 @@ class AddMessageComponent extends Component {
     this.setState({ title: event.target.value })
   }
   changeMessageHander = (event) => {
-    this.setState({ message: event.target.value })
+    this.setState({ description: event.target.value })
   }
-  Submit = (e) => {
+  submit = (e) => {
+    e.preventDefault()
     let object = {
       title: this.state.title,
-      message: this.state.message,
+      description: this.state.description
     }
     console.log(object)
+    //console.log(this.state.file)
+    saveMessage(object).then(response => {
+      console.log(response)
+    }).catch((error) => {
+      console.log(error)
+    })
+
   }
   render() {
     return (
@@ -54,7 +63,7 @@ class AddMessageComponent extends Component {
               <div className="d-grid gap-2 mt-3 mb-4">
                 <button
                   type="button"
-                  onClick={this.Submit}
+                  onClick={this.submit}
                   className="btn btn-primary"
                 >
                   Submit

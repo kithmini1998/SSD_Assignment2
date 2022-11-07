@@ -7,14 +7,14 @@ export default class MessageList extends Component {
     this.state = {
       message_list: ['first', 'second'],
       title: '',
-      message: '',
+      description: '',
     }
   }
   viewmessage = (e, id) => {
     console.log(id)
     this.setState({
       title: 'title',
-      message: 'message',
+      description: 'description',
     })
   }
   render() {
@@ -101,7 +101,7 @@ export default class MessageList extends Component {
                         type="text"
                         rows="7"
                         className="form-control"
-                         placeholder={this.state.message}
+                         placeholder={this.state.description}
                       />
                     </div>
                   </div>

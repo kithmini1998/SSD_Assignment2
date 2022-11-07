@@ -16,6 +16,8 @@ public class Constant {
     private String tokenPrefix;
     @Value("${application.jwt.tokenExpirationAfterDays}")
     private Integer tokenExpirationAfterDays;
+    @Value("${application.encrypt.secretKey}")
+    private String encryptSecretKey;
 
 
     public String getAuthorizationHeader() {
