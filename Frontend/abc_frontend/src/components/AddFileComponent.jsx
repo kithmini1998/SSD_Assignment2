@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import Header from './Header'
 import { saveFile } from '../services/File'
+import jwt_decord from 'jwt-decode'
 
 class AddFileComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      userId: '636666dac36f5209ebd52e51',
+      loginUser: localStorage.getItem('token'),
+      userId: '',
       title: '',
       role: '',
       file: '',
@@ -34,23 +36,30 @@ class AddFileComponent extends Component {
       this.setState({ file: e.target.value })
     }
   }
+  componentDidMount() {
+    if (this.state.loginUser) {
+      this.setState({ userId: jwt_decord(this.state.loginUser).sub })
+    } else {
+      this.props.history.push('/')
+    }
+  }
   submit = (e) => {
     e.preventDefault()
     let object = {
       userId: this.state.userId,
       title: this.state.title,
-      role: this.state.role,
       file: this.state.file,
     }
-    console.log(object)
-    console.log(this.state.file)
-    saveFile(object)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (this.state.title !== '' && this.state.file !== '') {
+      saveFile(object)
+        .then((response) => {
+          console.log(response)
+          this.props.history.push('/file-list')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   }
 
   render() {
@@ -65,25 +74,17 @@ class AddFileComponent extends Component {
                 <label>Title</label>
                 <input
                   type="text"
+                  required
                   className="form-control mt-1"
                   placeholder="Enter Title"
                   onChange={this.changeTitleHander}
                 />
               </div>
               <div className="form-group mt-3">
-                <label>For</label>
-                <select
-                  className="custom-select"
-                  onChange={this.changeRoleHander}
-                >
-                  <option selected>Choose Role</option>
-                  <option value="63668b1c3c8e99030a41bfa0">Manager</option>
-                  <option value="63668b623c8e99030a41bfa1">Worker</option>
-                </select>
-              </div>
-              <div className="form-group mt-3">
                 <label>Select a file</label>
                 <input
+                  required
+                  accept=".png, .jpg, .jpeg"
                   type="file"
                   name="file"
                   className="form-control mt-3 mb-5"

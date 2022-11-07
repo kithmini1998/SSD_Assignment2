@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import Header from './Header'
+import axios from 'axios'
+import jwt_decord from 'jwt-decode'
 
 class AddUser extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loginUser: localStorage.getItem('token'),
       name: '',
       username: '',
       role: '',
@@ -21,7 +24,13 @@ class AddUser extends Component {
     this.changeContactdHander = this.changeContactdHander.bind(this)
     this.changeOccupationHander = this.changeOccupationHander.bind(this)
   }
-
+  componentDidMount() {
+    if (this.state.loginUser) {
+      this.setState({ userId: jwt_decord(this.state.loginUser).sub })
+    } else {
+      this.props.history.push('/')
+    }
+  }
   changeNameHander = (event) => {
     this.setState({ name: event.target.value })
   }
@@ -52,6 +61,25 @@ class AddUser extends Component {
       password: this.state.password,
       contact: this.state.contact,
       occupation: this.state.occupation,
+    }
+    if (
+      this.state.name !== '' &&
+      this.state.username !== '' &&
+      this.state.role !== '' &&
+      this.state.email !== '' &&
+      this.state.password !== '' &&
+      this.state.contact !== '' &&
+      this.state.occupation !== ''
+    ) {
+      axios
+        .post('https://localhost:443/api/v1/user/registration', object)
+        .then((response) => {
+          console.log(response)
+          this.props.history.push('/user-list')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
     console.log(object)
   }
