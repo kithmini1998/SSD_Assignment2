@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {loginUser} from "../services/user";
+import Popup from 'reactjs-popup';
 
 class LogIn extends Component {
     constructor(props) {
@@ -7,10 +8,14 @@ class LogIn extends Component {
         this.state = {
             email: '',
             password: '',
+            otpId:'',
+            otp:'',
+            popUpVisible : true
         }
         this.changeEmailHander = this.changeEmailHander.bind(this)
         this.changePasswordHander = this.changePasswordHander.bind(this)
     }
+
 
     changeEmailHander = (event) => {
         this.setState({email: event.target.value})
@@ -32,6 +37,8 @@ class LogIn extends Component {
         })
     }
 
+
+    
     render() {
         return (
             <div className="Auth-form-container">

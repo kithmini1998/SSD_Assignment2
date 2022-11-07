@@ -8,12 +8,15 @@ import AddFileComponent from './components/AddFileComponent'
 import AddUser from './components/AddUser'
 import UserList from './components/UserList'
 import MessageList from './components/MessageList'
+import LoginWithHooks from './components/LoginWithHooks'
+
 
 function App() {
   return (
     <Router>
       <div>
-        <Route path="/" exact component={LogIn} />
+        {/* <Route path="/" exact component={LogIn} /> */}
+        <Route path="/" exact component={LoginWithHooks} />
         <Route path="/add-message" exact component={AddMessageComponent} />
         <Route path="/add-file" exact component={AddFileComponent} />
         <Route path="/add-user" exact component={AddUser} />

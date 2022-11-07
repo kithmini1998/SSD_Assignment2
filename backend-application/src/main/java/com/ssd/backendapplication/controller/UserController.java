@@ -1,6 +1,9 @@
 package com.ssd.backendapplication.controller;
 
+import com.ssd.backendapplication.auth.jwt.UsernameAndPasswordAuthenticationRequest;
+import com.ssd.backendapplication.model.AuthRequestBody;
 import com.ssd.backendapplication.model.User;
+import com.ssd.backendapplication.service.OTPServiceImpl;
 import com.ssd.backendapplication.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -22,6 +26,7 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceImpl userServiceImpl;
+    private final OTPServiceImpl otpService;
 
 
     @PostMapping("/registration")
@@ -40,6 +45,16 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         return ResponseEntity.ok(this.userServiceImpl.getUserById(id));
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody){
+        return ResponseEntity.ok(this.userServiceImpl.authenticateUser(requestBody));
+    }
+    @GetMapping("/auth/{id}/{otp}")
+    public ResponseEntity<Optional<User>> verifyOTP(@PathVariable String id,@PathVariable int otp){
+        Optional<User> user = otpService.verifyOTP(id,otp);
+        return ResponseEntity.ok(user);
     }
 
 }
