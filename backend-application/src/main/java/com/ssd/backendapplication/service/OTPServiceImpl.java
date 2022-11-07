@@ -43,10 +43,11 @@ public class OTPServiceImpl implements OTPService{
     @Override
     public Optional<User> verifyOTP(String id, int otp) {
         Optional<OTP> otpObj = otpRepository.findById(id);
-        if(otpObj != null){
+        if(otpObj.isPresent()){
             Optional<User> user = userRepository.findById(otpObj.get().getUserId());
-            if(otpObj.get().getOtp() == otp && user != null){
+            if(otpObj.get().getOtp() == otp && user.isPresent()){
                 otpRepository.deleteById(id);
+
                 return user;
             }
         }
