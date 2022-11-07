@@ -8,6 +8,7 @@ import AddFileComponent from './components/AddFileComponent'
 import AddUser from './components/AddUser'
 import UserList from './components/UserList'
 import MessageList from './components/MessageList'
+import FileList from './components/FileList'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/add-user" exact component={AddUser} />
         <Route path="/user-list" exact component={UserList} />
         <Route path="/message-list" exact component={MessageList} />
+        <Route path="/file-list" exact component={FileList} />
       </div>
     </Router>
   )
