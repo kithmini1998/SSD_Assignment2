@@ -1,6 +1,8 @@
 package com.ssd.backendapplication.auth;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,40 +10,19 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ApplicationUser implements UserDetails {
 
     private String id;
     private String username;
     private String password;
-
-
     private List<? extends GrantedAuthority> grantedAuthorities;
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public ApplicationUser(
-            String id,
-            String username,  String password,
-            List<? extends GrantedAuthority> grantedAuthorities,
-            boolean isAccountNonExpired,
-            boolean isAccountNonLocked,
-            boolean isCredentialsNonExpired,
-            boolean isEnabled) {
-
-        this.id = id;
-        this.password = password;
-        this.username = username;
-        this.grantedAuthorities = grantedAuthorities;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
-    }
-    public ApplicationUser(){
-
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

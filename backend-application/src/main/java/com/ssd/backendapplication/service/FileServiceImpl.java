@@ -29,7 +29,7 @@ public class FileServiceImpl implements FileService {
         File newFile = fileRepository.save(file);
         log.info("save file id {}", newFile.getId());
 
-        String hashValue = hashCodeHandler.encryptString(newFile.getFile());
+        String hashValue = hashCodeHandler.encryptString(newFile.getFileDate());
         log.info("generated hash value {}", hashValue);
 
         fileHashCodeRepository.save(FileHashCode.builder()
@@ -49,7 +49,7 @@ public class FileServiceImpl implements FileService {
             FileHashCode fileHashCode = fileHashCodeRepository.findByFileId(file.get().getId());
             log.info("get hash code from file id {}", file.get().getId());
 
-            String newHashCode = hashCodeHandler.encryptString(file.get().getFile());
+            String newHashCode = hashCodeHandler.encryptString(file.get().getFileDate());
             log.info("generate new hashcode for validate file {}", newHashCode);
 
             if (fileHashCode.getHashCode().equals(newHashCode)) {

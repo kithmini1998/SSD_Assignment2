@@ -43,11 +43,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JwtTokenVerifier(constant,secretKey),JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/api/v1/user-permission/add").permitAll()
-                .antMatchers("/api/v1/user/registration").permitAll()
-                .antMatchers("/api/v1/user/test").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest()
                 .authenticated();
     }

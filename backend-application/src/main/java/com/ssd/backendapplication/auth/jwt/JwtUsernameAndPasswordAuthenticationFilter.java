@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssd.backendapplication.auth.ApplicationUser;
 import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import java.util.Map;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @AllArgsConstructor
+@Slf4j
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 
@@ -46,10 +48,10 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             );
             return authenticationManager.authenticate(authentication);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-
+        } catch (Exception exception) {
+            log.info("error getting authentication user {}", exception.getMessage());
         }
+        return null;
     }
 
     @Override

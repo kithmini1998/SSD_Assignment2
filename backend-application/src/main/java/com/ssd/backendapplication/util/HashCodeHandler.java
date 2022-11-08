@@ -1,11 +1,13 @@
 package com.ssd.backendapplication.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
 @Component
+@Slf4j
 public class HashCodeHandler {
 
     public String encryptString(String value) {
@@ -19,7 +21,8 @@ public class HashCodeHandler {
             return bigInteger.toString(16);
 
         } catch (Exception exception) {
-            throw new RuntimeException("error getting encrypt date ===>".concat(exception.getMessage()));
+            log.info("error getting encrypt date {}", exception.getMessage());
         }
+        return null;
     }
 }
