@@ -16,6 +16,8 @@ export default class MessageList extends Component {
       //events2: this.state.events.filter(event => event.type !=="Workshop")
       this.setState({ message_list: res.data});
     });
+
+
   }
 
   viewmessage = (e, message) => {
@@ -25,12 +27,30 @@ export default class MessageList extends Component {
       description: message.description,
     })
   }
+
+  addMessage = (e) => {
+    e.preventDefault()
+    this.props.history.push('/add-message')
+  }
   render() {
+    let button
+      button = (
+          <div className="row">
+            <div className="col-md-10"></div>
+            <div className="col-md-2">
+              <button
+                  className="btn btn-success btn-block fa fa-plus"
+                  onClick={(e) => this.addMessage(e)}
+              ></button>
+            </div>
+          </div>
+      )
     return (
         <div>
           <Header></Header>
           <div className="user-form-container mt-5">
             <div className="around mt-5">
+              {button}
               <h3 className="Auth-form-title">Message List</h3>
               <div className="user_table">
                 <table className="table table-striped table-bordered">
