@@ -29,6 +29,7 @@ class LogIn extends Component {
       .then((response) => {
         console.log(response)
         localStorage.setItem('token', response.data.accessToken)
+         this.props.history.push('/add-user')
       })
       .catch((error) => {
         console.log(error)
