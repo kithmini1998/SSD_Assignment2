@@ -44,7 +44,9 @@ public class UserController {
     public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody) {
         String res = this.userServiceImpl.authenticateUser(requestBody);
         if (res.equalsIgnoreCase("")) {
-            return ResponseEntity.status(401).body("Unauthorized");
+            return ResponseEntity.status(401).body("Unauthorized, Your password is incorrect!");
+        }else if(res.equalsIgnoreCase("Banned")){
+            return ResponseEntity.status(401).body("Your Account has been banned for 10 minutes.");
         }
         return ResponseEntity.ok(res);
     }

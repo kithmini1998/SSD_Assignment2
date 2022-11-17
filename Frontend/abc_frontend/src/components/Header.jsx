@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
 import logo from '../images/logo-png.png'
+import jwt_decord from 'jwt-decode';
 class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
       showNav: false,
+      userName: jwt_decord(localStorage.getItem("token")).sub
     }
   }
+
   btnClicked = () => {
     this.setState({ showNav: true })
   }
 
   closeNavBar = () => {
     this.setState({ showNav: false })
+  }
+  signout = (e) =>{
+    e.preventDefault();
+    localStorage.removeItem('token');
+    localStorage.clear();
+    window.location.replace("/")
   }
   render() {
     return (
@@ -56,6 +65,14 @@ class Header extends Component {
                   <i className="fas fa-chart-line fa-fw me-3"></i>
                   <span>File List</span>
                 </a>
+                {/* <a
+                  href={''}
+                  className="list-group-item list-group-item-action py-2 ripple"
+                  onClick={()=> this.signout()}
+                >
+                  <i className="fas fa-chart-line fa-fw me-3"></i>
+                  <span>Log out</span>
+                </a> */}
                 <p onClick={this.closeNavBar}>Close</p>
               </div>
             </div>
@@ -138,7 +155,8 @@ class Header extends Component {
                   loading="lazy"
                 />
               </a>
-              <strong className="d-none d-sm-block ms-1">John</strong>
+              <strong className="d-none d-sm-block ms-1 text-light">{this.state.userName}</strong>
+              <strong className="d-none d-sm-block ms-1 text-light" onClick={(e)=> this.signout(e)}>Logout</strong>
             </div>
           </div>
         </div>

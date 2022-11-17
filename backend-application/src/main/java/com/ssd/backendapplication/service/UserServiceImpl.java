@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
             LocalDateTime now = LocalDateTime.now();
             if (ua != null) {
                 if (now.isAfter(ua.getLastModified())) {
-                    if (ua.getAttempts() < 4) {
+                    if (ua.getAttempts() < 3) {
                         ua.setAttempts(ua.getAttempts() + 1);
                         userAttemptsRepository.save(ua);
                         if (passwordEncoder.matches(obj.getPassword(),user.getPassword())) {
@@ -72,10 +72,10 @@ public class UserServiceImpl implements UserService {
                         ua.setLastModified(now.plusMinutes(10));
                         ua.setAttempts(0);
                         userAttemptsRepository.save(ua);
-                        return "";
+                        return "Banned";
                     }
                 } else {
-                    return "";
+                    return "Banned";
                 }
             } else {
                 UserAttempts userAttempts = new UserAttempts();

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Popup from 'reactjs-popup';
 import {authenticateUser, sendOTP,loginUser} from "../services/user";
-import { useAlert } from 'react-alert'
 function LoginWithHooks() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -9,8 +8,6 @@ function LoginWithHooks() {
     const [otp, setOtp] = useState('');
     const [otpId, setOtpId] = useState('');
     function login() {
-        console.log(userName)
-        console.log(password)
         let object = {
             username: userName,
             password: password
