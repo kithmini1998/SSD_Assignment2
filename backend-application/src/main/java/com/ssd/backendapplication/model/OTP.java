@@ -1,8 +1,8 @@
 package com.ssd.backendapplication.model;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+@Data
 public class OTP {
     @Id
     private String id;

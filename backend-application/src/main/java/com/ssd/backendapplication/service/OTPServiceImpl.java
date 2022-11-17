@@ -60,7 +60,7 @@ public class OTPServiceImpl implements OTPService {
             if (otpObj.get().getOtp() == otp && user.isPresent()) {
                 otpRepository.deleteById(id);
                 userAttemptsRepository.deleteById(user.get().getUserName());
-                return getAccessToken(user.get());
+                return user.get();
             }
         }
         return null;
@@ -68,7 +68,7 @@ public class OTPServiceImpl implements OTPService {
 
     public Object getAccessToken(User user) {
 
-        String url = "https://localhost:443/api/login";
+        String url = "https://localhost:433/api/login";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         UsernameAndPasswordAuthenticationRequest usernameAndPasswordAuthenticationRequest = new UsernameAndPasswordAuthenticationRequest();
@@ -76,8 +76,13 @@ public class OTPServiceImpl implements OTPService {
         usernameAndPasswordAuthenticationRequest.setUsername(user.getUserName());
 
         HttpEntity<UsernameAndPasswordAuthenticationRequest> requestEntity = new HttpEntity<>(usernameAndPasswordAuthenticationRequest, httpHeaders);
-        ResponseEntity<JsonNode> jsonNode = restTemplate.exchange(url, HttpMethod.POST, requestEntity, JsonNode.class);
-        log.info("token get by otp {}", jsonNode.getBody());
-        return jsonNode.getBody();
+        try {
+            ResponseEntity<JsonNode> jsonNode = restTemplate.exchange(url, HttpMethod.POST, requestEntity, JsonNode.class);
+            log.info("token get by otp {}", jsonNode.getBody());
+            return jsonNode.getBody();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return null;
     }
 }
