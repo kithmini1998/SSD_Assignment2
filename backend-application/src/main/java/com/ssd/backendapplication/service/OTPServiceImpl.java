@@ -3,6 +3,7 @@ package com.ssd.backendapplication.service;
 import com.ssd.backendapplication.model.OTP;
 import com.ssd.backendapplication.model.User;
 import com.ssd.backendapplication.repository.OTPRepository;
+import com.ssd.backendapplication.repository.UserAttemptsRepository;
 import com.ssd.backendapplication.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ public class OTPServiceImpl implements OTPService{
 
     private final OTPRepository otpRepository;
     private final UserRepository userRepository;
+
+    private final UserAttemptsRepository userAttemptsRepository;
 
     /***
      *
@@ -47,6 +50,7 @@ public class OTPServiceImpl implements OTPService{
             Optional<User> user = userRepository.findById(otpObj.get().getUserId());
             if(otpObj.get().getOtp() == otp && user != null){
                 otpRepository.deleteById(id);
+                userAttemptsRepository.deleteById(user.get().getUserName());
                 return user;
             }
         }

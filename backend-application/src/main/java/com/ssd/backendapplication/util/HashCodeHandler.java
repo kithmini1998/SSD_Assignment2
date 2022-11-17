@@ -12,6 +12,7 @@ public class HashCodeHandler {
 
         try {
 
+            //sha-256
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
             byte[] messageByte = messageDigest.digest(value.getBytes());
             BigInteger bigInteger = new BigInteger(1, messageByte);
