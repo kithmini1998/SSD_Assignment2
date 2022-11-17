@@ -20,7 +20,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD
 import java.util.Random;
+=======
+>>>>>>> origin/main
 
 @Service
 @AllArgsConstructor
@@ -39,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User user) {
-       user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
 
@@ -49,9 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-
-        return null;
+    public User getUserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     @Override

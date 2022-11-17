@@ -12,9 +12,13 @@ public interface UserService {
 
     List<User> getAllUsers();
 
+<<<<<<< HEAD
     User getUserById(int id);
 
     String authenticateUser(AuthRequestBody obj);
 
     Optional<User> getUserById(String id);
+=======
+    User getUserById(String id);
+>>>>>>> origin/main
 }

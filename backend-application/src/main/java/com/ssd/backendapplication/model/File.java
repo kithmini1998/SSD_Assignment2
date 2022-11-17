@@ -18,7 +18,6 @@ public class File {
     private String id;
     private String userId;
     private String title;
-    private String role;
     private String file;
 
 }

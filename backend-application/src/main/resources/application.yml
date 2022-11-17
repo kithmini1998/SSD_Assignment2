@@ -18,6 +18,8 @@ application:
     secretKey: SecuritySecuritySecuritySecuritySecuritySecuritySecurity
     tokenPrefix: Bearer
     tokenExpirationAfterDays: 1
+  encrypt:
+    secretKey: Tz3XY8A5yf6+3LK8qCSo+5vSIRPANIKXec1XnMk8me4=
 
 
 spring:

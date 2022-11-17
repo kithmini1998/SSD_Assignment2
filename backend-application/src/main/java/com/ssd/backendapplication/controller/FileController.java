@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("v1/file")
@@ -25,5 +27,10 @@ public class FileController {
     @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     public ResponseEntity<File> getFileById(@PathVariable String id) {
         return ResponseEntity.ok(this.fileService.getFileById(id));
+    }
+
+    @GetMapping("/get/all")
+    public ResponseEntity<List<File>> getAllFiles() {
+        return ResponseEntity.ok(this.fileService.getAllFiles());
     }
 }

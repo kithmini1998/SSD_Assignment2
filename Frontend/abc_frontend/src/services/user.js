@@ -5,6 +5,7 @@ export const loginUser = (credentials) => {
   return Axios.post(`/login`, credentials);
 };
 
+<<<<<<< HEAD
 export const authenticateUser = (credentials) => {
   return Axios.post(`/v1/user/auth`, credentials);
 };
@@ -37,3 +38,5 @@ export const getAllEmployeesByDep = (id) => {
 export const getToatl = (id) => {
   return Axios.post(`/employee/calculation/?id=${id}`);
 };
+=======
+>>>>>>> origin/main
