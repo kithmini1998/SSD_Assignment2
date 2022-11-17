@@ -1,11 +1,12 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Header from './Header'
-import {saveMessage} from "../services/Messsage";
-
+import { saveMessage } from '../services/Messsage'
+import axios from 'axios'
 class AddMessageComponent extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loginUser: localStorage.getItem('token'),
       title: '',
       description: '',
     }
@@ -22,16 +23,22 @@ class AddMessageComponent extends Component {
     e.preventDefault()
     let object = {
       title: this.state.title,
-      description: this.state.description
+      description: this.state.description,
     }
     console.log(object)
+    const config = {
+      headers: { Authorization: `Bearer ${this.state.loginUser}` },
+    }
     //console.log(this.state.file)
-    saveMessage(object).then(response => {
-      console.log(response)
-    }).catch((error) => {
-      console.log(error)
-    })
-
+    axios
+      .post('https://localhost:443/api/v1/message/add', object, config)
+      .then((response) => {
+        console.log(response)
+        this.props.history.push('/message-list')
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
   render() {
     return (
