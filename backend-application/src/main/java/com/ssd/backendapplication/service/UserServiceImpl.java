@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
                 userAttempts.setLastModified(now);
                 userAttempts.setAttempts(1);
                 userAttemptsRepository.save(userAttempts);
-                if (user.getPassword().equalsIgnoreCase(obj.getPassword())) {
+                if (passwordEncoder.matches(obj.getPassword(),user.getPassword())) {
                     OTP otp = generateOTP(user);
                     return otp.getId();
                 } else {

@@ -1,25 +1,16 @@
 package com.ssd.backendapplication.controller;
 
-import com.ssd.backendapplication.auth.jwt.UsernameAndPasswordAuthenticationRequest;
 import com.ssd.backendapplication.model.AuthRequestBody;
 import com.ssd.backendapplication.model.User;
 import com.ssd.backendapplication.service.OTPServiceImpl;
 import com.ssd.backendapplication.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.connector.Response;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -50,17 +41,17 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody){
+    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody) {
         String res = this.userServiceImpl.authenticateUser(requestBody);
-        if(res.equalsIgnoreCase("")){
+        if (res.equalsIgnoreCase("")) {
             return ResponseEntity.status(401).body("Unauthorized");
         }
         return ResponseEntity.ok(this.userServiceImpl.authenticateUser(requestBody));
     }
+
     @GetMapping("/auth/{id}/{otp}")
-    public ResponseEntity<Optional<User>> verifyOTP(@PathVariable String id,@PathVariable int otp){
-        Optional<User> user = otpService.verifyOTP(id,otp);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Object> verifyOTP(@PathVariable String id, @PathVariable int otp) {
+        return ResponseEntity.ok(otpService.verifyOTP(id, otp));
     }
 
 }
