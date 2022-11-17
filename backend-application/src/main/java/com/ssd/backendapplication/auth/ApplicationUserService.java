@@ -38,7 +38,7 @@ public class ApplicationUserService implements UserDetailsService {
             return new ApplicationUser(
                     user.getId(),
                     user.getUserName(),
-                    passwordEncoder.encode(user.getPassword()),
+                    user.getPassword(),
                     simpleGrantedAuthorities,
                     true,
                     true,

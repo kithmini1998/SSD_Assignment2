@@ -48,13 +48,13 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody){
+    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody) {
         return ResponseEntity.ok(this.userServiceImpl.authenticateUser(requestBody));
     }
+
     @GetMapping("/auth/{id}/{otp}")
-    public ResponseEntity<Optional<User>> verifyOTP(@PathVariable String id,@PathVariable int otp){
-        Optional<User> user = otpService.verifyOTP(id,otp);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Object> verifyOTP(@PathVariable String id, @PathVariable int otp) {
+        return ResponseEntity.ok(otpService.verifyOTP(id, otp));
     }
 
 }

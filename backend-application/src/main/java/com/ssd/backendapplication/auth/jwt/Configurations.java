@@ -20,8 +20,4 @@ public class Configurations {
         return Keys.hmacShaKeyFor(constant.getSecretKey().getBytes());
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }

@@ -20,6 +20,6 @@ public interface OTPService {
      */
     Optional<OTP> getOTPById (String id);
 
-    Optional<User> verifyOTP (String id, int otp);
+    Object verifyOTP (String id, int otp);
 
 }
