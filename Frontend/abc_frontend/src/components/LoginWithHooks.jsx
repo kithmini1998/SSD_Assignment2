@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Popup from 'reactjs-popup';
-import {authenticateUser, sendOTP} from "../services/user";
+import {authenticateUser, sendOTP,loginUser} from "../services/user";
 import { useAlert } from 'react-alert'
 function LoginWithHooks() {
     const [userName, setUserName] = useState('');
@@ -19,7 +19,6 @@ function LoginWithHooks() {
             console.log(response)
             setPopoUpVisibleTrue();
             setOtpId(response.data)
-            // console.log(response.data);
         }).catch((err) => {
             console.log("Error ",err.response)
             alert(err.response.data)
@@ -31,10 +30,23 @@ function LoginWithHooks() {
         setPopUpVisible(true);
     }
 
+
     function sentOTP() {
+        let object = {
+            username: userName,
+            password: password
+        }
         sendOTP(otpId, otp).then((responce) => {
             setPopUpVisible(false);
-            console.log(responce.data);
+            loginUser(object).then((response)=>{
+                console.log("Response ", response)
+                localStorage.setItem('token', response.data.accessToken)
+                window.location.replace("/message-list")
+            }).catch((err)=>{
+                alert("Login failed!!")
+            })
+            // console.log(responce.data);
+
         }).catch((err) => {
             console.log("error ", err);
         })

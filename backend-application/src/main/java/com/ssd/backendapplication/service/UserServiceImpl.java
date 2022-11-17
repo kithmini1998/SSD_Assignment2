@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService {
                         }
 
                     } else {
-                        ua.setLastModified(now.plusMinutes(30));
+                        ua.setLastModified(now.plusMinutes(10));
+                        ua.setAttempts(0);
                         userAttemptsRepository.save(ua);
                         return "";
                     }

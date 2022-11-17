@@ -46,7 +46,7 @@ public class UserController {
         if (res.equalsIgnoreCase("")) {
             return ResponseEntity.status(401).body("Unauthorized");
         }
-        return ResponseEntity.ok(this.userServiceImpl.authenticateUser(requestBody));
+        return ResponseEntity.ok(res);
     }
 
     @GetMapping("/auth/{id}/{otp}")

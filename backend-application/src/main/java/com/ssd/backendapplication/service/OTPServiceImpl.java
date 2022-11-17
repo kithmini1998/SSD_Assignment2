@@ -28,6 +28,8 @@ public class OTPServiceImpl implements OTPService {
     private final UserRepository userRepository;
     private final RestTemplate restTemplate;
 
+    private final UserAttemptsService userAttemptsService;
+
     private final UserAttemptsRepository userAttemptsRepository;
 
     /***
@@ -59,7 +61,7 @@ public class OTPServiceImpl implements OTPService {
             Optional<User> user = userRepository.findById(otpObj.get().getUserId());
             if (otpObj.get().getOtp() == otp && user.isPresent()) {
                 otpRepository.deleteById(id);
-                userAttemptsRepository.deleteById(user.get().getUserName());
+                userAttemptsService.deleteUserAttempt(user.get().getUserName());
                 return user.get();
             }
         }
