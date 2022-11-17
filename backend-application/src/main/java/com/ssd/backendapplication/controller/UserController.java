@@ -7,6 +7,8 @@ import com.ssd.backendapplication.service.OTPServiceImpl;
 import com.ssd.backendapplication.service.UserServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,13 +50,17 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody) {
+    public ResponseEntity<String> authenticateUser(@RequestBody AuthRequestBody requestBody){
+        String res = this.userServiceImpl.authenticateUser(requestBody);
+        if(res.equalsIgnoreCase("")){
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
         return ResponseEntity.ok(this.userServiceImpl.authenticateUser(requestBody));
     }
-
     @GetMapping("/auth/{id}/{otp}")
-    public ResponseEntity<Object> verifyOTP(@PathVariable String id, @PathVariable int otp) {
-        return ResponseEntity.ok(otpService.verifyOTP(id, otp));
+    public ResponseEntity<Optional<User>> verifyOTP(@PathVariable String id,@PathVariable int otp){
+        Optional<User> user = otpService.verifyOTP(id,otp);
+        return ResponseEntity.ok(user);
     }
 
 }
