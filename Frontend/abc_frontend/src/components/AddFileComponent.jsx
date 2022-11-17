@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from './Header'
 import { saveFile } from '../services/File'
+import axios from 'axios'
 import jwt_decord from 'jwt-decode'
 
 class AddFileComponent extends Component {
@@ -45,13 +46,18 @@ class AddFileComponent extends Component {
   }
   submit = (e) => {
     e.preventDefault()
+
     let object = {
       userId: this.state.userId,
       title: this.state.title,
       file: this.state.file,
     }
+    const config = {
+      headers: { Authorization: `Bearer ${this.state.loginUser}` },
+    }
     if (this.state.title !== '' && this.state.file !== '') {
-      saveFile(object)
+      axios
+        .post('https://localhost:443/api/v1/file/add', object, config)
         .then((response) => {
           console.log(response)
           this.props.history.push('/file-list')

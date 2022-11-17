@@ -22,7 +22,7 @@ export default class MessageList extends Component {
       this.state.permissions = jwt_decord(
         localStorage.getItem('token'),
       ).authorities
-      
+
       axios.get('https://localhost:443/api/v1/file/get/all').then((res) => {
         this.setState({ file_list: res.data })
       })
@@ -42,28 +42,33 @@ export default class MessageList extends Component {
 
   viewmessage = (e, id) => {
     e.preventDefault()
+    const config = {
+      headers: { Authorization: `Bearer ${this.state.loginUser}` },
+    }
     this.setState({
       message: '',
       title: '',
       addedby: '',
       file: '',
     })
-    axios.get('https://localhost:443/api/v1/file/get/' + id).then((res) => {
-      if (res.data.hasOwnProperty('message')) {
-        this.setState({
-          message: res.data.message,
-          title: 'Data Is Tampered',
-        })
-        console.log(res.data)
-      } else {
-        this.setState({
-          title: res.data.title,
-          addedby: res.data.userId,
-          file: res.data.file,
-        })
-        console.log(res.data)
-      }
-    })
+    axios
+      .get('https://localhost:443/api/v1/file/get/' + id, config)
+      .then((res) => {
+        if (res.data.hasOwnProperty('message')) {
+          this.setState({
+            message: res.data.message,
+            title: 'Data Is Tampered',
+          })
+          console.log(res.data)
+        } else {
+          this.setState({
+            title: res.data.title,
+            addedby: res.data.userId,
+            file: res.data.file,
+          })
+          console.log(res.data)
+        }
+      })
   }
   addFile = (e) => {
     e.preventDefault()
