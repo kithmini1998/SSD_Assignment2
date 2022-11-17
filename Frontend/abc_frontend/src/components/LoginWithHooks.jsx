@@ -16,11 +16,12 @@ function LoginWithHooks() {
             password: password
         }
         authenticateUser(object).then((response) => {
+            console.log(response)
             setPopoUpVisibleTrue();
             setOtpId(response.data)
             // console.log(response.data);
         }).catch((err) => {
-            console.log("Error ",err.response.data)
+            console.log("Error ",err.response)
             alert(err.response.data)
         })
 

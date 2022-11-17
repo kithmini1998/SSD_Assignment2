@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Header from './Header'
 import {saveMessage} from "../services/Messsage";
-import {saveFile} from "../services/File";
+
 class AddMessageComponent extends Component {
   constructor(props) {
     super(props)

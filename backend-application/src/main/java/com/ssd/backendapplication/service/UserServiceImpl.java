@@ -10,6 +10,7 @@ import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,20 +21,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD
 import java.util.Random;
-=======
->>>>>>> origin/main
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserAttemptsRepository userAttemptsRepository;
 
-    private  OTPServiceImpl otpService;
+    private OTPServiceImpl otpService;
 
     private static final String ACCOUNT_SID = "ACa0d2853a7bdd6db158f6055468139322";
     private static final String AUTH_TOKEN = "5f5570f6a6ddb2d2be21d79b298ffc5c";
@@ -52,75 +51,71 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(String id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
-    }
-
-    @Override
     public String authenticateUser(AuthRequestBody obj) {
         User user = userRepository.getUserByUserName(obj.getUsername());
-        if(user != null){
+        if (user != null) {
             UserAttempts ua = userAttemptsRepository.getUserAttemptByUserName(user.getUserName());
             LocalDateTime now = LocalDateTime.now();
-            if(ua != null){
-                if(now.isAfter(ua.getLastModified())){
-                    if(ua.getAttempts() < 4){
-                        ua.setAttempts(ua.getAttempts()+1);
+            if (ua != null) {
+                if (now.isAfter(ua.getLastModified())) {
+                    if (ua.getAttempts() < 4) {
+                        ua.setAttempts(ua.getAttempts() + 1);
                         userAttemptsRepository.save(ua);
-                        if(user.getPassword().equalsIgnoreCase(obj.getPassword())){
+                        if (passwordEncoder.matches(obj.getPassword(),user.getPassword())) {
                             OTP otp = generateOTP(user);
                             return otp.getId();
-                        }else{
-                            return  "";
+                        } else {
+                            return "";
                         }
 
-                    }else{
+                    } else {
                         ua.setLastModified(now.plusMinutes(30));
                         userAttemptsRepository.save(ua);
                         return "";
                     }
-                }else{
+                } else {
                     return "";
                 }
-            }else{
+            } else {
                 UserAttempts userAttempts = new UserAttempts();
                 userAttempts.setUserName(user.getUserName());
                 userAttempts.setLastModified(now);
                 userAttempts.setAttempts(1);
                 userAttemptsRepository.save(userAttempts);
-                if(user.getPassword().equalsIgnoreCase(obj.getPassword())){
+                if (user.getPassword().equalsIgnoreCase(obj.getPassword())) {
                     OTP otp = generateOTP(user);
                     return otp.getId();
-                }else{
-                    return  "";
+                } else {
+                    return "";
                 }
             }
-        }else{
-            System.out.println("Can not the find the user");
+        } else {
+            log.info("Can not the find the user");
         }
         return null;
     }
 
-    private OTP generateOTP(User user){
+    private OTP generateOTP(User user) {
         Random rand = new Random();
         int otpNumber = rand.nextInt(10000);
-        OTP otp = new OTP(user.getId(),otpNumber);
+        OTP otp = new OTP(user.getId(), otpNumber);
         OTP response = otpService.saveOTP(otp);
-        if(response != null){
+        if (response != null) {
             String messageBody = "Your OTP is " + response.getOtp();
             String to = user.getContact().toString();
-            sendSMSUsingNotifyLK(messageBody,to);
+            sendSMSUsingNotifyLK(messageBody, to);
             return response;
-        }else{
-            System.out.println("Response is null");
+        } else {
+            log.info("Response is null");
             return null;
         }
 
     }
+
     @Override
-    public Optional<User> getUserById(String id) {
-        return userRepository.findById(id);
+    public User getUserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     public boolean sendSMS(String body) {
@@ -132,27 +127,26 @@ public class UserServiceImpl implements UserService {
             params.add(new BasicNameValuePair("From", TWILIO_NUMBER));
             MessageFactory messageFactory = client.getAccount().getMessageFactory();
             Message message = messageFactory.create(params);
-            System.out.println(message.getSid());
+            log.info(message.getSid());
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
         return false;
     }
 
-    public boolean sendSMSUsingNotifyLK(String body, String to){
+    public boolean sendSMSUsingNotifyLK(String body, String to) {
         try {
-            String mobile = "94"+to;
+            String mobile = "94" + to;
             String message = body;
-            String uri = "https://app.notify.lk/api/v1/send?user_id=23608&api_key=GrfcK9978sTkVsATKgmf&sender_id=NotifyDEMO&to="+mobile+"&message="+message;
+            String uri = "https://app.notify.lk/api/v1/send?user_id=23608&api_key=GrfcK9978sTkVsATKgmf&sender_id=NotifyDEMO&to=" + mobile + "&message=" + message;
             RestTemplate restTemplate = new RestTemplate();
             String result = restTemplate.getForObject(uri, String.class);
-            System.out.println("Result : " + result);
+            log.info("Result : " + result);
             return true;
-        }catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            log.info(ex.getMessage());
         }
         return false;
     }
